@@ -3,12 +3,16 @@
 @section('content')
     <div class="container" style="margin-top: 100px;">
 
-        <button type="button" class="btn btn-primary my-3" data-toggle="modal" data-target="#exampleModal">
-            Add New
-        </button>
+        @can('add_product')
+            <button type="button" class="btn btn-primary my-3" data-toggle="modal" data-target="#exampleModal">
+                Add New
+            </button>
+        @endcan
 
         {{-- <button onclick="print()" class="btn btn-info">Print</button> --}}
-        <a class="btn btn-info" href="{{ route('product.download') }}">Download</a>
+        @can('download_product')
+            <a class="btn btn-info" href="{{ route('product.download') }}">Download</a>
+        @endcan
 
 
         <div class="row">
@@ -27,42 +31,63 @@
                                 {{ session('category_del') }}
                             </div>
                         @endif
-
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>SL</th>
-                                    <th>Title</th>
-                                    <th>Series</th>
-                                    <th>Model</th>
-                                    <th>Brand</th>
-                                    <th>Stock</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($products as $sl => $product)
+                        {{-- products table --}}
+                        <div class="main-table">
+                            <table class="table-striped">
+                                <thead>
                                     <tr>
-                                        <td>{{ $sl + 1 }}</td>
-                                        <td>{{ $product->title == '' ? 'NA' : $product->title }}</td>
-                                        <td>{{ $product->series == '' ? 'NA' : $product->series }}</td>
-                                        <td>{{ $product->model == '' ? 'NA' : $product->model }}</td>
-                                        <td>{{ $product->brand == '' ? 'NA' : $product->brand }}</td>
-                                        <td>{{ $product->current_stock == '' ? 'NA' : $product->current_stock }}</td>
-                                        <td>
-                                            <a href="{{ route('product.view', $product->id) }}"
-                                                class="btn btn-info text-white">View</a>
-                                            <a href="{{ route('product.edit', $product->id) }}"
-                                                class="btn btn-primary">Edit</a>
-                                            </button>
-
-                                        </td>
+                                        <th>SL</th>
+                                        <th>Title</th>
+                                        <th>Series</th>
+                                        <th>Model</th>
+                                        <th>Brand</th>
+                                        <th>Stock</th>
+                                        <th>
+                                            <div class="d-flex justify-content-center">
+                                                Action
+                                            </div>
+                                        </th>
                                     </tr>
-                                @endforeach
+                                </thead>
+                                <tbody>
+                                    @foreach ($products as $sl => $product)
+                                        <tr>
+                                            <td>{{ $sl + 1 }}</td>
+                                            <td>{{ $product->title == '' ? 'NA' : $product->title }}</td>
+                                            <td>{{ $product->series == '' ? 'NA' : $product->series }}</td>
+                                            <td>{{ $product->model == '' ? 'NA' : $product->model }}</td>
+                                            <td>{{ $product->brand == '' ? 'NA' : $product->brand }}</td>
+                                            <td>
+                                                <div class="d-flex justify-content-center">
+                                                    {{ $product->current_stock == '' ? 'NA' : $product->current_stock }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex justify-content-center" style="flex-wrap: nowrap;">
+                                                    <div class="col my-2">
+                                                        @can('view_product')
+                                                            <a href="{{ route('product.view', $product->id) }}"
+                                                                class="btn-sm btn-info text-white">View</a>
+                                                        @endcan
+                                                    </div>
+
+                                                    <div class="col my-2">
+                                                        @can('edit_product')
+                                                            <a href="{{ route('product.edit', $product->id) }}"
+                                                                class="btn-sm btn-primary">Edit</a>
+                                                            </button>
+                                                        @endcan
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
 
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
 
                     </div>
                 </div>

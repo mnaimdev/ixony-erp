@@ -33,9 +33,12 @@
                                 </select>
                             </div>
 
-                            <div class="my-2">
-                                <button type="submit" class="btn btn-primary mx-2">Submit</button>
-                            </div>
+                            @can('report_submit')
+                                <div class="my-2">
+                                    <button type="submit" class="btn btn-primary mx-2">Submit</button>
+                                </div>
+                            @endcan
+
                         </form>
                     </div>
                 </div>

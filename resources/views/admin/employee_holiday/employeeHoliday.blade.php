@@ -3,7 +3,11 @@
 
 @section('content')
     <div class="container" style="margin-top: 100px">
-        <a href="{{ route('Employee.Manage.Leave') }}" class="btn btn-primary my-3">Manage Leave</a>
+
+        @can('manage_leave')
+            <a href="{{ route('Employee.Manage.Leave') }}" class="btn btn-primary my-3">Manage Leave</a>
+        @endcan
+
         <div class="row">
             <div class="col-lg-8">
                 <div class="card">
@@ -25,10 +29,12 @@
                                         <td>{{ $holiday->employee->name }}</td>
                                         <td>{{ $holiday->holiday }}</td>
                                         <td>
-                                            <a href="{{ route('Employee.Holiday.Edit', $holiday->id) }}"
-                                                class="btn btn-primary">Edit</a>
-                                            <a data-delete="{{ route('Employee.Holiday.Delete', $holiday->id) }}"
-                                                class="btn btn-danger delete">Delete</a>
+                                            @can('employee_edit_holiday')
+                                                <a href="{{ route('Employee.Holiday.Edit', $holiday->id) }}"
+                                                    class="btn btn-primary">Edit</a>
+                                            @endcan
+                                            {{-- <a data-delete="{{ route('Employee.Holiday.Delete', $holiday->id) }}"
+                                                class="btn btn-danger delete">Delete</a> --}}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -39,63 +45,65 @@
             </div>
 
 
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-center">Employee Holiday</h3>
-                    </div>
+            @can('employee_add_holiday')
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="text-center">Employee Holiday</h3>
+                        </div>
 
-                    <div class="card-body">
-                        <form class="col" method="POST" action="{{ route('Employee.Holiday.Store') }}">
-                            @csrf
+                        <div class="card-body">
+                            <form class="col" method="POST" action="{{ route('Employee.Holiday.Store') }}">
+                                @csrf
 
 
-                            @if (session('holiday'))
-                                <div class="alert alert-success">
-                                    {{ session('holiday') }}
+                                @if (session('holiday'))
+                                    <div class="alert alert-success">
+                                        {{ session('holiday') }}
+                                    </div>
+                                @endif
+
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label class="my-1">Employee</label>
+                                        <select name="employee_id" class="form-control">
+                                            <option disabled selected>-- Select Employee --</option>
+                                            @foreach ($employees as $employee)
+                                                <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                            @endforeach
+
+
+                                        </select>
+                                        @error('employee_id')
+                                            <strong class="text-danger">
+                                                {{ $message }}
+                                            </strong>
+                                        @enderror
+
+
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <label class="my-1">Total Holiday</label>
+                                        <input type="number" class="form-control" name="holiday" value="{{ old('holiday') }}">
+                                        @error('holiday')
+                                            <strong class="text-danger">
+                                                {{ $message }}
+                                            </strong>
+                                        @enderror
+                                    </div>
                                 </div>
-                            @endif
-
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <label class="my-1">Employee</label>
-                                    <select name="employee_id" class="form-control">
-                                        <option disabled selected>-- Select Employee --</option>
-                                        @foreach ($employees as $employee)
-                                            <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-                                        @endforeach
 
 
-                                    </select>
-                                    @error('employee_id')
-                                        <strong class="text-danger">
-                                            {{ $message }}
-                                        </strong>
-                                    @enderror
 
-
+                                <div class="col-auto mt-3">
+                                    <button type="submit" class="btn btn-primary mb-3">Save</button>
                                 </div>
-
-                                <div class="col-lg-12">
-                                    <label class="my-1">Total Holiday</label>
-                                    <input type="number" class="form-control" name="holiday" value="{{ old('holiday') }}">
-                                    @error('holiday')
-                                        <strong class="text-danger">
-                                            {{ $message }}
-                                        </strong>
-                                    @enderror
-                                </div>
-                            </div>
-
-
-
-                            <div class="col-auto mt-3">
-                                <button type="submit" class="btn btn-primary mb-3">Save</button>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endcan
         </div>
 
     </div>

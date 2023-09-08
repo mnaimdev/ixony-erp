@@ -57,8 +57,10 @@
                                         </td>
 
                                         <td>
-                                            <a href="{{ route('Employee.Resigned.View', $employee->id) }}"
-                                                class="btn btn-primary">View</a>
+                                            @can('employee_resigned_view')
+                                                <a href="{{ route('Employee.Resigned.View', $employee->id) }}"
+                                                    class="btn btn-primary">View</a>
+                                            @endcan
                                         </td>
                                     </tr>
 

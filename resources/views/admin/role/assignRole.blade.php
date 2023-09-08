@@ -36,13 +36,18 @@
                                     @endforelse
                                 </td>
                                 <td>
-                                    @forelse ($user->getAllPermissions() as $permission)
-                                        <span class="badge badge-secondary badge-sm m-1">
-                                            {{ $permission->name }}
-                                        </span>
-                                    @empty
-                                        <span>N/A</span>
-                                    @endforelse
+                                    <div class="row">
+                                        @forelse ($user->getAllPermissions() as $permission)
+                                            <div class="col">
+                                                <span class="badge badge-secondary badge-sm m-1">
+                                                    {{ $permission->name }}
+                                                </span>
+                                            </div>
+                                        @empty
+                                            <span>N/A</span>
+                                        @endforelse
+                                        <div class="row">
+
                                 </td>
                                 <td>
 

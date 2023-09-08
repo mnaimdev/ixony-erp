@@ -2,9 +2,13 @@
 
 @section('content')
     <div class="container" style="margin-top: 100px;">
-        <button type="button" class="btn btn-primary my-3" data-toggle="modal" data-target="#exampleModal">
-            Add New
-        </button>
+        @can('add_challan')
+            <button type="button" class="btn btn-primary my-3" data-toggle="modal" data-target="#exampleModal">
+                Add New
+            </button>
+        @endcan
+
+
         <div class="row">
 
             <div class="col-lg-12 col-sm-12 col-md-12">
@@ -33,27 +37,36 @@
                                     <td>{{ $challan->returnable }}</td>
 
                                     <td>
-                                        <div class="custom-control custom-switch">
-                                            <input data-id="{{ $challan->id }}" class="toggle-class" type="checkbox"
-                                                data-onstyle="success" data-offstyle="danger" data-toggle="toggle"
-                                                data-on="Active" data-off="InActive"
-                                                {{ $challan->status == 'Pending' ? '' : 'checked' }}>
+                                        @can('challan_status')
+                                            <div class="custom-control custom-switch">
+                                                <input data-id="{{ $challan->id }}" class="toggle-class" type="checkbox"
+                                                    data-onstyle="success" data-offstyle="danger" data-toggle="toggle"
+                                                    data-on="Active" data-off="InActive"
+                                                    {{ $challan->status == 'Pending' ? '' : 'checked' }}>
 
-                                        </div>
+                                            </div>
+                                        @endcan
 
 
 
                                     </td>
 
                                     <td>
-                                        <a href="{{ route('Product.Challan.Edit', $challan->id) }}"
-                                            class="btn btn-primary">Edit</a>
+                                        @can('edit_challan')
+                                            <a href="{{ route('Product.Challan.Edit', $challan->id) }}"
+                                                class="btn btn-primary">Edit</a>
+                                        @endcan
 
-                                        <a href="{{ route('Product.Challan.View', $challan->id) }}"
-                                            class="btn btn-primary">View</a>
 
-                                        <a href="{{ route('Challan.Product.Add', $challan->bundle_id) }}"
-                                            class="btn btn-info">Product</a>
+                                        @can('view_challan')
+                                            <a href="{{ route('Product.Challan.View', $challan->id) }}"
+                                                class="btn btn-primary">View</a>
+                                        @endcan
+
+                                        @can('challan_product')
+                                            <a href="{{ route('Challan.Product.Add', $challan->bundle_id) }}"
+                                                class="btn btn-info">Product</a>
+                                        @endcan
 
                                     </td>
                                 </tr>

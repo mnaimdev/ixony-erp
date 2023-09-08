@@ -2,9 +2,13 @@
 
 @section('content')
     <div class="container" style="margin-top: 100px;">
-        <button type="button" class="btn btn-primary my-3" data-toggle="modal" data-target="#exampleModal">
-            Add New
-        </button>
+        @can('add_purchase')
+            <button type="button" class="btn btn-primary my-3" data-toggle="modal" data-target="#exampleModal">
+                Add New
+            </button>
+        @endcan
+
+
         <div class="row">
 
             <div class="col-lg-12 col-sm-12 col-md-12">
@@ -31,11 +35,15 @@
                                     <td>{{ $purchase->supplier_challan_no }}</td>
                                     <td>{{ $purchase->details }}</td>
                                     <td>
-                                        <a href="{{ route('Product.Purchase.Edit', $purchase->id) }}"
-                                            class="btn btn-primary">Edit</a>
+                                        @can('edit_purchase')
+                                            <a href="{{ route('Product.Purchase.Edit', $purchase->id) }}"
+                                                class="btn btn-primary">Edit</a>
+                                        @endcan
 
-                                        <a href="{{ route('Purchase.Product.Add', $purchase->bundle_id) }}"
-                                            class="btn btn-info">Product</a>
+                                        @can('purchase_product')
+                                            <a href="{{ route('Purchase.Product.Add', $purchase->bundle_id) }}"
+                                                class="btn btn-info">Product</a>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

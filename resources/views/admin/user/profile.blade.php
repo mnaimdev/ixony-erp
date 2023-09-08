@@ -3,6 +3,7 @@
 @section('content')
     <div class="container-fluid" style="margin-top: 100px">
         <div class="row my-3">
+
             <div class="col-lg-4 mb-3">
                 <div class="card">
                     <div class="card-header">
@@ -25,6 +26,7 @@
                 </div>
 
             </div>
+
 
 
             <div class="col-lg-8">
@@ -63,6 +65,7 @@
 
 
         <div class="row my-3">
+
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-header">
@@ -93,6 +96,8 @@
                 </div>
             </div>
 
+
+
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-header">
@@ -102,15 +107,6 @@
                         <form action="{{ route('Profile.Password.Update') }}" method="POST">
                             @csrf
 
-                            <div class="form-group my-3">
-                                <label>Old Password</label>
-                                <input type="password" name="oldPassword" class="form-control" placeholder="Old Password">
-                                @error('oldPassword')
-                                    <strong class="text-danger">
-                                        {{ $message }}
-                                    </strong>
-                                @enderror
-                            </div>
 
                             <div class="form-group my-3">
                                 <label>New Password</label>
@@ -142,6 +138,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection

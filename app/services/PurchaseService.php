@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Session;
 
 class PurchaseService
 {
-    private $productId, $quantity, $date, $purchaseFrom, $supplierChallanNo, $details, $workOrderNo, $bundleId;
+    private $productId, $quantity, $date, $purchaseFrom, $supplierChallanNo, $details, $bundleId;
 
     public function purchase()
     {
@@ -83,12 +83,6 @@ class PurchaseService
     }
 
 
-    public function setWorkOrderNo($value)
-    {
-        $this->workOrderNo = $value;
-        return $this;
-    }
-
 
     public function save()
     {
@@ -102,7 +96,6 @@ class PurchaseService
         $purchase->purchase_from = $this->purchaseFrom;
         $purchase->supplier_challan_no = $this->supplierChallanNo;
         $purchase->details = $this->details;
-        $purchase->work_order_no = $this->workOrderNo;
         $purchase->bundle_id = $bundleId;
         $purchase->created_at = Carbon::now();
         $purchase->save();

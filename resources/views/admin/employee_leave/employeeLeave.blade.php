@@ -3,7 +3,9 @@
 
 @section('content')
     <div class="container" style="margin-top: 100px;">
-        <a href="{{ route('Employee.Leave') }}" class="btn btn-primary my-2">Leave List</a>
+        @can('employee_leave_request')
+            <a href="{{ route('Employee.Leave') }}" class="btn btn-primary my-2">Leave List</a>
+        @endcan
         <div class="card">
             <div class="card-header">
                 <h3 class="text-center">Employee Leave Request</h3>

@@ -3,7 +3,11 @@
 
 @section('content')
     <div class="container" style="margin-top: 100px;">
-        <a href="{{ route('Employee') }}" class="btn btn-primary my-2">List</a>
+
+        @can('employee')
+            <a href="{{ route('Employee') }}" class="btn btn-primary my-2">List</a>
+        @endcan
+
         <div class="card">
             <div class="card-header">
                 <h3 class="text-center">Add Employee</h3>

@@ -3,7 +3,12 @@
 
 @section('content')
     <div class="container" style="margin-top: 100px;">
-        <a href="{{ route('Employee.Create') }}" class="btn btn-primary my-2">Add New</a>
+
+
+        @can('add_employee')
+            <a href="{{ route('Employee.Create') }}" class="btn btn-primary my-2">Add New</a>
+        @endcan
+
         <div class="card">
             <div class="card-header">
                 <h3 class="text-center">Employee List</h3>
@@ -37,27 +42,44 @@
 
 
                                 <td>
-                                    <img width="50" height="50"
-                                        src="{{ asset('/uploads/employee') }}/{{ $employee->photo }}" alt="">
+                                    @if ($employee->photo == '')
+                                        <img src="{{ Avatar::create($employee->name)->toBase64() }}" />
+                                    @else
+                                        <img width="50" height="50"
+                                            src="{{ asset('/uploads/employee') }}/{{ $employee->photo }}" alt="">
+                                    @endif
+
                                 </td>
                                 <td>
-                                    <img width="50" height="50"
-                                        src="{{ asset('/uploads/employee/nid') }}/{{ $employee->nid_photo }}"
-                                        alt="">
+                                    @if ($employee->nid_photo == '')
+                                        NA
+                                    @else
+                                        <img width="50" height="50"
+                                            src="{{ asset('/uploads/employee/nid') }}/{{ $employee->nid_photo }}"
+                                            alt="">
+                                    @endif
+
                                 </td>
                                 <td>
-                                    <div class="form-check form-switch">
-                                        <input data-id="{{ $employee->id }}" class="form-check-input toggle-class"
-                                            type="checkbox" id="flexSwitchCheckChecked" data-onstyle="success"
-                                            data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive"
-                                            {{ $employee->status ? 'checked' : '' }}>
-                                    </div>
+                                    @can('employee_status')
+                                        <div class="form-check form-switch">
+                                            <input data-id="{{ $employee->id }}" class="form-check-input toggle-class"
+                                                type="checkbox" id="flexSwitchCheckChecked" data-onstyle="success"
+                                                data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive"
+                                                {{ $employee->status ? 'checked' : '' }}>
+                                        </div>
+                                    @endcan
                                 </td>
 
 
                                 <td>
-                                    <a href="{{ route('Employee.Edit', $employee->id) }}" class="btn btn-primary">Edit</a>
-                                    <a href="{{ route('Employee.View', $employee->id) }}" class="btn btn-info">View</a>
+                                    @can('edit_employee')
+                                        <a href="{{ route('Employee.Edit', $employee->id) }}" class="btn btn-primary">Edit</a>
+                                    @endcan
+
+                                    @can('view_employee')
+                                        <a href="{{ route('Employee.View', $employee->id) }}" class="btn btn-info">View</a>
+                                    @endcan
                                 </td>
 
                             </tr>

@@ -45,6 +45,10 @@
 
                                 <div class="col-lg-12">
                                     <label class="my-2">Permissions</label>
+
+                                    <div class="my-2">
+                                        <input type="checkbox" id="checkAll"> All
+                                    </div>
                                     @foreach ($permissions as $permission)
                                         <div class="form-group mb-3">
                                             <input type="checkbox" name="permission_id[]"
@@ -84,6 +88,11 @@
             } else {
                 $(':checkbox').prop('checked', false);
             }
+        });
+
+
+        $('#checkAll').click(function() {
+            $('input:checkbox').prop('checked', this.checked);
         });
     </script>
 @endsection

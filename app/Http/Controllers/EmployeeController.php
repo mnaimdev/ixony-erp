@@ -90,7 +90,8 @@ class EmployeeController extends Controller
 
 
         // insert data into users table
-        $randomNumber = str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
+        // $randomNumber = str_pad(mt_rand(1, 9999999999), 10, '0', STR_PAD_LEFT);
+        $randomNumber = '12345678';
 
         $user = new User();
         $user->name = $newEmployee->name;

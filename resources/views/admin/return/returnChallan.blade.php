@@ -30,11 +30,13 @@
                                     <td>{{ $challan->customer_name }}</td>
 
 
-                                    <td>
-                                        <a href="{{ route('Challan.Return.Complete', $challan->bundle_id) }}"
-                                            class="btn btn-primary">Complete</a>
+                                    @can('return_challan_complete')
+                                        <td>
+                                            <a href="{{ route('Challan.Return.Complete', $challan->bundle_id) }}"
+                                                class="btn btn-primary">Complete</a>
 
-                                    </td>
+                                        </td>
+                                    @endcan
                                 </tr>
                             @empty
                                 No Returnable Challan

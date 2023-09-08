@@ -25,17 +25,23 @@
                                     <tr>
                                         <td>{{ $sl + 1 }}</td>
                                         <td>{{ $role->name }}</td>
+
                                         <td>
 
+                                            <div class="row">
+                                                @forelse ($role->permissions as $permission)
+                                                    <div class="col">
+                                                        <span class="badge badge-primary m-1">
+                                                            {{ $permission->name }}
+                                                        </span>
+                                                    </div>
 
-                                            @forelse ($role->permissions as $permission)
-                                                <span class="text-primary m-1">
-                                                    {{ $permission->name }}
-                                                </span>
-                                            @empty
-                                                <span>NA</span>
-                                            @endforelse
+                                                @empty
+                                                    <span>NA</span>
+                                                @endforelse
+                                            </div>
                                         </td>
+
                                         <td>
                                             <a href="{{ route('edit.role.permission', $role->id) }}" class="btn btn-primary"
                                                 width="40">Edit</a>

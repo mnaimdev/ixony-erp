@@ -37,7 +37,6 @@ class PurchaseController extends Controller
                 ->setPurchaseFrom($request->purchase_from)
                 ->setSupplierChallanNo($request->supplier_challan_no)
                 ->setDetails($request->details)
-                ->setWorkOrderNo($request->work_order_no)
                 ->save();
 
             $notification = array(

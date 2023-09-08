@@ -3,7 +3,10 @@
 
 @section('content')
     <div class="container" style="margin-top: 100px">
-        <a href="{{ route('Employee.Leave.Create') }}" class="btn btn-primary my-2">Add Leave Request</a>
+        @can('employee_add_leave_request')
+            <a href="{{ route('Employee.Leave.Create') }}" class="btn btn-primary my-2">Add Leave Request</a>
+        @endcan
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
@@ -39,11 +42,10 @@
                                         </td>
                                         <td>{{ $leave->details }}</td>
                                         <td>
-                                            <a href="{{ route('Employee.Leave.Edit', $leave->id) }}"
-                                                class="btn btn-primary">Edit</a>
-
-                                            <a data-delete="{{ route('Employee.Leave.Delete', $leave->id) }}"
-                                                class="btn btn-danger delete">Delete</a>
+                                            @can('employee_edit_leave_request')
+                                                <a href="{{ route('Employee.Leave.Edit', $leave->id) }}"
+                                                    class="btn btn-primary">Edit</a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
