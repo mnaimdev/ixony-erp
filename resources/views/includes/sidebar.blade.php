@@ -63,7 +63,6 @@
 
 
             {{-- Product --}}
-
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#product" role="button" aria-expanded="false"
                     aria-controls="product">
